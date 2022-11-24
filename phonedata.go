@@ -5,9 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"os"
-	"path"
-	"runtime"
 )
 
 const (
@@ -46,14 +43,16 @@ var (
 	total_len, firstoffset int32
 )
 
+// go:embed phone.dat
+
 func init() {
-	dir := os.Getenv("PHONE_DATA_DIR")
-	if dir == "" {
-		_, fulleFilename, _, _ := runtime.Caller(0)
-		dir = path.Dir(fulleFilename)
-	}
+	// dir := os.Getenv("PHONE_DATA_DIR")
+	// if dir == "" {
+	// 	_, fulleFilename, _, _ := runtime.Caller(0)
+	// 	dir = path.Dir(fulleFilename)
+	// }
 	var err error
-	content, err = ioutil.ReadFile(path.Join(dir, PHONE_DAT))
+	content, err = ioutil.ReadFile("phone.dat")
 	if err != nil {
 		panic(err)
 	}
