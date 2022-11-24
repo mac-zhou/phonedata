@@ -2,9 +2,9 @@ package phonedata
 
 import (
 	"bytes"
+	"encoding/base64"
 	"errors"
 	"fmt"
-	"io/ioutil"
 )
 
 const (
@@ -31,6 +31,7 @@ type PhoneRecord struct {
 }
 
 var (
+	Base64data  string
 	content     []byte
 	CardTypemap = map[byte]string{
 		CMCC:   "中国移动",
@@ -43,8 +44,6 @@ var (
 	total_len, firstoffset int32
 )
 
-// go:embed phone.dat
-
 func init() {
 	// dir := os.Getenv("PHONE_DATA_DIR")
 	// if dir == "" {
@@ -52,7 +51,7 @@ func init() {
 	// 	dir = path.Dir(fulleFilename)
 	// }
 	var err error
-	content, err = ioutil.ReadFile("phone.dat")
+	content, err = base64.StdEncoding.DecodeString(Base64data)
 	if err != nil {
 		panic(err)
 	}
